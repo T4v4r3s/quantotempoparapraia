@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"webapp/src/config"
-	"webapp/src/cookies"
 	"webapp/src/utils"
 )
 
@@ -18,7 +17,6 @@ import (
 
 func main() {
 	config.Carregar()
-	cookies.Configurar()
 	utils.CarregarTemplates() //pode ser feito numa função init também
 
 	fmt.Printf("Rodando WebApp! Escutando na porta %d", config.Porta)
