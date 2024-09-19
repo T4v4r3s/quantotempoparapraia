@@ -2,8 +2,14 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 	"webapp/src/config"
+	"webapp/src/cookies"
+	"webapp/src/router"
 	"webapp/src/utils"
+
+	"github.com/gorilla/handlers"
 )
 
 //Cria uma hash e um block key para o cookie
@@ -17,8 +23,14 @@ import (
 
 func main() {
 	config.Carregar()
+	cookies.Configurar()
+	r := router.Gerar()
 	utils.CarregarTemplates() //pode ser feito numa função init também
 
-	fmt.Printf("Rodando WebApp! Escutando na porta %d", config.Porta)
+	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
+	originsOk := handlers.AllowedOrigins([]string{"*"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
 
+	fmt.Printf("Rodando WebApp! Escutando na porta %d", config.Porta)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.Porta), handlers.CORS(originsOk, headersOk, methodsOk)(r)))
 }
