@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador para 09/10/2024</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .contador {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .tempo {
+            font-size: 2em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contador">
+        <h1>Contagem Regressiva</h1>
+        <div class="tempo" id="tempo">Carregando...</div>
+    </div>
+
+    <script>
+        function atualizarContador() {
+            const dataAlvo = new Date("2024-10-09T00:00:00").getTime();
+            const agora = new Date().getTime();
+            const distancia = dataAlvo - agora;
+
+            const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+            document.getElementById("tempo").innerHTML = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+
+            if (distancia < 0) {
+                clearInterval(contador);
+                document.getElementById("tempo").innerHTML = "O dia chegou!";
+            }
+        }
+
+        const contador = setInterval(atualizarContador, 1000);
+    </script>
+
+</body>
+</html>
