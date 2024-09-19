@@ -18,12 +18,16 @@ type Rota struct {
 // Configurar coloca todas as rotas no router
 func Configurar(router *mux.Router) *mux.Router {
 
-	rota := RotaPaginaPrincipal
+	rotas := RotaPaginaPrincipal
 
-	if rota.RequerAutenticacao {
-		router.HandleFunc(rota.URI, middlewares.Logger(middlewares.Autenticar(rota.Funcao))).Methods(rota.Metodo)
-	} else {
-		router.HandleFunc(rota.URI, middlewares.Logger(rota.Funcao)).Methods(rota.Metodo)
+	for _, rota := range rotas {
+
+		if rota.RequerAutenticacao {
+			router.HandleFunc(rota.URI, middlewares.Logger(middlewares.Autenticar(rota.Funcao))).Methods(rota.Metodo)
+		} else {
+			router.HandleFunc(rota.URI, middlewares.Logger(rota.Funcao)).Methods(rota.Metodo)
+		}
+
 	}
 
 	//Configura o fileserver para que ele fique no /assets/

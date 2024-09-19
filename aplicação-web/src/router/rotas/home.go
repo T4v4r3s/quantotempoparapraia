@@ -1,10 +1,21 @@
 package rotas
 
-import "webapp/src/controllers"
+import (
+	"net/http"
+	"webapp/src/controllers"
+)
 
-var RotaPaginaPrincipal = Rota{
-	URI:                "/home",
-	Metodo:             "GET",
-	Funcao:             controllers.CarregarPaginaPrincipal,
-	RequerAutenticacao: true,
+var RotaPaginaPrincipal = []Rota{
+	{
+		URI:                "/",
+		Metodo:             http.MethodGet,
+		Funcao:             controllers.CarregarPaginaPrincipal,
+		RequerAutenticacao: false,
+	},
+	{
+		URI:                "/home",
+		Metodo:             http.MethodGet,
+		Funcao:             controllers.CarregarPaginaPrincipal,
+		RequerAutenticacao: false,
+	},
 }
